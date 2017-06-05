@@ -25,8 +25,10 @@ public class PlaceMonster : MonoBehaviour {
 	//1
 	void OnMouseUp () {
   		//2
+        monsterPrefab = gameManager.ClickedBtn.TowerPrefab;
 		if (canPlaceMonster ()) {
 	    	//3
+           
 		    monster = (GameObject) Instantiate(monsterPrefab, transform.position, Quaternion.identity);
 		    //4
     		AudioSource audioSource = gameObject.GetComponent<AudioSource>();

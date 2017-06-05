@@ -59,6 +59,8 @@ public class MoveEnemy : MonoBehaviour {
 			gameObject.transform.FindChild("Sprite").gameObject;
 		sprite.transform.rotation = 
 			Quaternion.AngleAxis(rotationAngle, Vector3.forward);
+   
+       
 	}
 
 	public float distanceToGoal() {

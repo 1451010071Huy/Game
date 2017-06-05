@@ -14,6 +14,7 @@ public class ShootEnemies : MonoBehaviour {
 		enemiesInRange = new List<GameObject>();
 		lastShotTime = Time.time;
 		monsterData = gameObject.GetComponentInChildren<MonsterData> ();
+       
 	}
 	
 	// Update is called once per frame
@@ -35,10 +36,11 @@ public class ShootEnemies : MonoBehaviour {
 				lastShotTime = Time.time;
 			}
 			// 3
-			Vector3 direction = gameObject.transform.position - target.transform.position;
-			gameObject.transform.rotation = Quaternion.AngleAxis(
-				Mathf.Atan2 (direction.y, direction.x) * 180 / Mathf.PI,
-				new Vector3 (0, 0, 1));
+            Vector3 direction = gameObject.transform.position - target.transform.position;
+            gameObject.transform.rotation = Quaternion.AngleAxis(
+                Mathf.Atan2(direction.y, direction.x) * 180 / Mathf.PI,
+                new Vector3(0, 0, 1));
+            
 		}
 	}
 
@@ -76,15 +78,15 @@ public class ShootEnemies : MonoBehaviour {
 		GameObject newBullet = (GameObject)Instantiate (bulletPrefab);
 		newBullet.transform.position = startPosition;
 		BulletBehavior bulletComp = newBullet.GetComponent<BulletBehavior>();
-		bulletComp.target = target.gameObject;
-		bulletComp.startPosition = startPosition;
-		bulletComp.targetPosition = targetPosition;
+        bulletComp.target = target.gameObject;
+        bulletComp.startPosition = startPosition;
+        bulletComp.targetPosition = targetPosition;
 		
 		// 3 
-		Animator animator = 
-			monsterData.CurrentLevel.visualization.GetComponent<Animator> ();
-		animator.SetTrigger ("fireShot");
-		AudioSource audioSource = gameObject.GetComponent<AudioSource>();
-		audioSource.PlayOneShot(audioSource.clip);
+        Animator animator =
+            monsterData.CurrentLevel.visualization.GetComponent<Animator>();
+        animator.SetTrigger("fireShot");
+        AudioSource audioSource = gameObject.GetComponent<AudioSource>();
+        audioSource.PlayOneShot(audioSource.clip);
 	}
 }

@@ -3,7 +3,7 @@ using System.Collections;
 
 [System.Serializable]
 public class Wave {
-	public GameObject enemyPrefab;
+	public GameObject[] enemyPrefab;
 	public float spawnInterval = 2;
 	public int maxEnemies = 20;
 }
@@ -36,16 +36,22 @@ public class SpawnEnemy : MonoBehaviour {
 			// 2
 			float timeInterval = Time.time - lastSpawnTime;
 			float spawnInterval = waves[currentWave].spawnInterval;
-			if (((enemiesSpawned == 0 && timeInterval > timeBetweenWaves) ||
-			     timeInterval > spawnInterval) && 
-			    enemiesSpawned < waves[currentWave].maxEnemies) {
-				// 3  
-				lastSpawnTime = Time.time;
-				GameObject newEnemy = (GameObject)
-					Instantiate(waves[currentWave].enemyPrefab);
-				newEnemy.GetComponent<MoveEnemy>().waypoints = waypoints;
-				enemiesSpawned++;
-			}
+            if (((enemiesSpawned == 0 && timeInterval > timeBetweenWaves) ||
+                 timeInterval > spawnInterval) &&
+                enemiesSpawned < waves[currentWave].maxEnemies)
+            {
+                // 3  
+                lastSpawnTime = Time.time;
+                for (int i = 0; i < waves[currentWave].enemyPrefab.Length; i++)
+                {
+                    
+                    GameObject newEnemy = (GameObject)
+                        Instantiate(waves[currentWave].enemyPrefab[i]);
+                    newEnemy.GetComponent<MoveEnemy>().waypoints = waypoints;
+                    
+                }
+                enemiesSpawned++;
+            }
 			// 4 
 			if (enemiesSpawned == waves[currentWave].maxEnemies &&
 			    GameObject.FindGameObjectWithTag("Enemy") == null) {
