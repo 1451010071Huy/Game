@@ -4,6 +4,12 @@ using UnityEngine.UI;
 
 public class GameManagerBehavior : MonoBehaviour {
 
+   
+    public TowerBtn ClickedBtn { get; set; }
+    public void PickTower(TowerBtn towerBtn)
+    {
+        this.ClickedBtn = towerBtn;
+    }
 	public Text goldLabel;
 	private int gold;
 	public int Gold {
