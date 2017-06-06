@@ -10,6 +10,10 @@ public class GameManagerBehavior : MonoBehaviour {
     {
         this.ClickedBtn = towerBtn;
     }
+    public void Unclick ()
+    {
+        this.ClickedBtn = null;
+    }
 	public Text goldLabel;
 	private int gold;
 	public int Gold {
