@@ -18,31 +18,44 @@ public class PlaceMonster : MonoBehaviour {
 	}
 	
 	private bool canPlaceMonster() {
+        
+        monsterPrefab = gameManager.ClickedBtn.TowerPrefab;
 		int cost = monsterPrefab.GetComponent<MonsterData> ().levels[0].cost;
 		return monster == null && gameManager.Gold >= cost;
 	}
-	
-	//1
-	void OnMouseUp () {
-  		//2
-        monsterPrefab = gameManager.ClickedBtn.TowerPrefab;
-		if (canPlaceMonster ()) {
-	    	//3
-           
-		    monster = (GameObject) Instantiate(monsterPrefab, transform.position, Quaternion.identity);
-		    //4
-    		AudioSource audioSource = gameObject.GetComponent<AudioSource>();
-			audioSource.PlayOneShot(audioSource.clip);
- 
-			gameManager.Gold -= monster.GetComponent<MonsterData>().CurrentLevel.cost;
-		} else if (canUpgradeMonster()) {
-			monster.GetComponent<MonsterData>().increaseLevel();
-			AudioSource audioSource = gameObject.GetComponent<AudioSource>();
-			audioSource.PlayOneShot(audioSource.clip);
+	public void PlaceMonsters()
+    {
 
-			gameManager.Gold -= monster.GetComponent<MonsterData>().CurrentLevel.cost;
-		}
-	}
+        monster = (GameObject)Instantiate(gameManager.ClickedBtn.TowerPrefab, transform.position, Quaternion.identity);
+        //4
+        AudioSource audioSource = gameObject.GetComponent<AudioSource>();
+        audioSource.PlayOneShot(audioSource.clip);
+       
+        gameManager.Gold -= monster.GetComponent<MonsterData>().CurrentLevel.cost;
+ 
+    }
+	//1
+    void OnMouseOver()
+    {
+        //2
+        if (Input.GetMouseButtonDown(0))
+        {
+            if (canPlaceMonster())
+            {
+                //3
+                PlaceMonsters();
+             //   gameManager.Unclick();
+            }
+            else if (canUpgradeMonster())
+            {
+                monster.GetComponent<MonsterData>().increaseLevel();
+                AudioSource audioSource = gameObject.GetComponent<AudioSource>();
+                audioSource.PlayOneShot(audioSource.clip);
+
+                gameManager.Gold -= monster.GetComponent<MonsterData>().CurrentLevel.cost;
+            }
+        }
+    }
 
 	private bool canUpgradeMonster() {
 		if (monster != null) {
